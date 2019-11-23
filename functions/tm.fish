@@ -11,9 +11,9 @@ function tm -d "Switch tmux session with skim"
     if count $argv > /dev/null
         set session "$argv[1]"
     else
-        eval "tmux list-sessions -F \"#{session_name}\" \
+        tmux list-sessions -F "#{session_name}" \
         2>/dev/null \
-        | sk --exit-0" | read -l session
+        | sk --exit-0 --height=10 | read -l session
 
         if test -n $session
 
