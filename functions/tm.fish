@@ -13,7 +13,7 @@ function tm -d "Switch tmux session with skim"
     else
         tmux list-sessions -F "#{session_name}" \
         2>/dev/null \
-        | sk --exit-0 --height=10 | read -l session
+        | eval (__fzfcmd)" $FZF_DEFAULT_OPTS --exit-0" | read -l session
 
         if test -n $session
 

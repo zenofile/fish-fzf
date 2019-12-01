@@ -1,13 +1,12 @@
-function zz -d "List Z jump options in skim" -a dir
+function zz -d "List Z jump options in fzf" -a dir
     z -l \
-    | sort -k1 -nr \
-    | tr -s ' ' | cut -d ' ' -f2 \
-    | sk --height=10 --reverse --query "$dir"\
-    --preview 'ls --color=always {}' \
-    | read -l target_dir
+    | tr -s ' ' \
+    | eval (__fzfcmd)" $FZF_DEFAULT_OPTS --with-nth=2.. --reverse --query \"$dir\" \
+        --preview \"$FZF_PREVIEW_DIR_CMD {2..}\"" \
+    | read _ -l dst
 
-    if not test -z "$target_dir"
-        cd "$target_dir"
+    if not test -z "$dst"
+        cd "$dst"
 
         commandline -t ""
     end
